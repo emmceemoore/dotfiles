@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# 
+# Bootstrap!
+#
+
+# Exit immediately if a command exits with a nonzero exit status.
+set -e
+
+# Work out of a known location.
+# Reference: http://stackoverflow.com/a/246128
+directory_root="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "${directory_root}"
+
+echo "🚀 Bootstrapping \"dotfiles\"..."
+
+echo "🧰 Installing build tools..."
+./scripts/install-build-tools.sh
+echo "🍺 Installing Homebrew..."
+./scripts/install-homebrew.sh
+echo "💤 Installing Oh-My-ZSH..."
+./scripts/install-oh-my-zsh.sh
+echo "⚙️  Installing dotfiles..."
+./scripts/install-dotfiles.sh
+echo "🍎 Customizing macOS defaults..."
+./scripts/customize-macos-defaults.sh
+
+echo "👍 Bootstrapping complete."
+exit 0
