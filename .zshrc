@@ -213,7 +213,6 @@ alias simple-server="python -m SimpleHTTPServer 8001"
 alias brewup="brew update && brew upgrade --ignore-pinned && brew cleanup; brew doctor"
 alias nodeup="npm install npm -g && npm update -g"
 alias update="brewup && nodeup"
-#alias updot="cd ${HOME}/.dotfiles && git pull && ./bootstrap && cd -"
 
 # Misc
 alias cpr="hub pull-request"
@@ -234,7 +233,3 @@ u() {
 # Use a better-styled prompt.
 #PS1="%{${fg[blue]}%}%n%{${fg[default]}%}@%{${fg[green]}%}%m %{${fg[default]}%}$ "
 RPROMPT="%{${fg[red]}%}%B%(7~,.../,)%6~%b%{${fg[default]}%}"
-
-### LOCAL OVERRIDES ###
-
-. "${HOME}/.zshrc.local"
