@@ -172,6 +172,11 @@ alias mv="mv -i"
 # Shortcuts
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
+alias df="cd $(dirname $(readlink ~/.zshrc))"
+
+# Keystroke Savers
+alias cls="clear"
+alias claer="clear"
 
 # `ls`
 alias l="ls -l"
@@ -230,6 +235,5 @@ u() {
 
 ### Prompt #####################################################################
 
-# Use a better-styled prompt.
-#PS1="%{${fg[blue]}%}%n%{${fg[default]}%}@%{${fg[green]}%}%m %{${fg[default]}%}$ "
+# Display the full-ish path on the right.
 RPROMPT="%{${fg[red]}%}%B%(7~,.../,)%6~%b%{${fg[default]}%}"

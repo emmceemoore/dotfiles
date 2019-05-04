@@ -32,15 +32,20 @@ Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " AIRLINE
-let g:airline_powerline_fonts=1
+let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline_theme='minimalist'
+let g:airline_theme = 'minimalist'
 
 " FZF
-" Customize fzf colors to match your color scheme.
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
+let g:fzf_action = {
+  \ 'ctrl-m': 'tab split',
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+" Customize FZF colors to match theme colors.
+let g:fzf_colors = {
+  \ 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
   \ 'hl':      ['fg', 'Comment'],
   \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
@@ -53,19 +58,12 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
-" Invoke `:Files` with Ctrl+P.
-nnoremap <C-p> :Files<Cr>
-" Open files in horizontal split
-nnoremap <silent> <Leader>s :call fzf#run({
-\   'down': '40%',
-\   'sink': 'botright split' })<CR>
-" Open files in vertical horizontal split
-nnoremap <silent> <Leader>v :call fzf#run({
-\   'right': winwidth('.') / 2,
-\   'sink':  'vertical botright split' })<CR>
 
 " GITGUTTER
 autocmd BufWritePost * GitGutter
+" Disable mappings for now since I don't use them and they conflict with
+" custom key mappings.
+let g:gitgutter_map_keys = 0
 
 " POLYGLOT
 let g:vim_markdown_new_list_item_indent = 0
@@ -113,6 +111,8 @@ set notitle        " Don't mess with the window title.
 set nolist         " Disable 'list' by default.
 set modeline       " Enable modelines to set vim modes.
 set modelines=3    " Check the last three lines for modelines.
+set splitbelow     " Open split windows on the bottom.
+set splitright     " Open vertical split windows on the right.
 
 colorscheme gruvbox
 
@@ -135,6 +135,12 @@ set ttymouse=xterm2
 " Auto resize split panes whenever the host window is resized.
 " Reference: https://vi.stackexchange.com/a/206
 autocmd VimResized * wincmd =
+
+" Better split pane navigation.
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Formatting                                                                   "
@@ -160,17 +166,22 @@ autocmd BufReadPre *.pdf set ro
 autocmd BufReadPost *.pdf silent %!pdftotext -layout "%" - | fmt -csw78
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Functions                                                                    "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" <F10>: Remove unnecessary whitespace from the file.
-nmap <F10> :%s/\s\+$//<CR>``
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key Mappings                                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let mapleader = ","
+let mapleader = "\<Space>"
+
+" Quickly open files with `<space><space>`.
+nnoremap <leader><Space> :Files<CR>
+" Quickly open git-tracked files with `<space>g`.
+nnoremap <leader>g :GitFiles<CR>
+
+" Quickly switch between tabs with `<space>h` and `<space>l`.
+nnoremap <leader>h gT
+nnoremap <leader>l gt
+
+" Remove unnecessary whitespace from the file and return to the same spot.
+nnoremap <leader>W :%s/\s\+$//<CR>``
 
 " Maintain selection during indent/dedent.
 vnoremap < <gv
@@ -180,14 +191,14 @@ vnoremap > >gv
 " Tab Completion                                                               "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Use TAB to complete when typing words, else inserts TABs as usual.
-" Uses dictionary and source files to find matching words to complete.
-function! Tab_Or_Complete()
-	if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-		return "\<C-N>"
-	else
-		return "\<Tab>"
-	endif
+" Map <Tab> to either actually insert a <Tab> if the current line is currently
+" only whitespace, or start/continue a CTRL-N completion operation.
+" Reference: :help ins-completion
+function! CleverTab()
+    if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+        return "\<Tab>"
+    else
+        return "\<C-N>"
+    endif
 endfunction
-:inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
-:set dictionary="/usr/dict/words"
+inoremap <Tab> <C-R>=CleverTab()<CR>
