@@ -19,23 +19,18 @@ call plug#begin('~/.vim/bundle')
 
 " Plugins
 Plug 'airblade/vim-gitgutter'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'davidhalter/jedi-vim'
 Plug 'morhetz/gruvbox'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-sleuth'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
 " Initialize plugin system.
 call plug#end()
-
-" AIRLINE
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline_theme = 'minimalist'
 
 " FZF
 let g:fzf_action = {
@@ -64,6 +59,16 @@ autocmd BufWritePost * GitGutter
 " Disable mappings for now since I don't use them and they conflict with
 " custom key mappings.
 let g:gitgutter_map_keys = 0
+
+" JEDI
+let g:jedi#use_tabs_not_buffers = 1
+let g:jedi#goto_command = "<leader>d"
+let g:jedi#goto_assignments_command = ""
+let g:jedi#goto_definitions_command = ""
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "<leader>r"
 
 " POLYGLOT
 let g:vim_markdown_new_list_item_indent = 0
@@ -96,7 +101,7 @@ set nohlsearch        " Disable search results highlighting.
 
 set ruler          " Show the current position along the bottom.
 set showcmd        " Display what you type in command mode.
-set showmode       " Show which mode you're in (command/insert).
+set noshowmode     " Don't show which mode you're in (airline handles this).
 syntax on          " Enable syntax highlighting.
 set scrolloff=2    " Keep a buffer at the top/bottom of the window.
 set visualbell     " Use a flash instead of a beep.

@@ -97,9 +97,23 @@ source $ZSH/oh-my-zsh.sh
 unsetopt share_history
 bindkey '^R' history-incremental-search-backward
 
+#
 # fzf
+#
+
 set -o vi
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Setup fzf
+if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
+    export PATH="${PATH:+${PATH}:}/usr/local/opt/fzf/bin"
+fi
+
+# Auto-completion
+[[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
+
+# Key bindings
+source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+
 export FZF_DEFAULT_OPTS="--layout=reverse --inline-info --multi"
 
 #
@@ -223,6 +237,7 @@ alias update="brewup && nodeup"
 alias cpr="hub pull-request"
 alias hyperspace="say -v Zarvox 'hyperspace'"
 alias prettyjson="python -m json.tool"
+alias taco="curl -L git.io/taco"
 
 ### Functions ##################################################################
 
