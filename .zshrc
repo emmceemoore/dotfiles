@@ -74,6 +74,7 @@ plugins=(
     command-not-found
     #common-aliases
     django
+    gatsby
     git
     #git-extras
     gnu-utils
@@ -86,6 +87,7 @@ plugins=(
     rand-quote
     safe-paste
     screen
+    swiftpm
     vi-mode
     web-search
 )

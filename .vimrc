@@ -19,9 +19,11 @@ call plug#begin('~/.vim/bundle')
 
 " Plugins
 Plug 'airblade/vim-gitgutter'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'davidhalter/jedi-vim'
 Plug 'morhetz/gruvbox'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'npm install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-sleuth'
 Plug 'vim-airline/vim-airline'
@@ -200,10 +202,10 @@ vnoremap > >gv
 " only whitespace, or start/continue a CTRL-N completion operation.
 " Reference: :help ins-completion
 function! CleverTab()
-    if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-        return "\<Tab>"
-    else
-        return "\<C-N>"
-    endif
+  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+    return "\<Tab>"
+  else
+    return "\<C-N>"
+  endif
 endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
