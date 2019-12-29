@@ -11,7 +11,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
 
 # Set list of themes to pick from when loading at random
@@ -30,8 +30,14 @@ ZSH_THEME="robbyrussell"
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
 
+# Uncomment the following line to automatically update without prompting.
+# DISABLE_UPDATE_PROMPT="true"
+
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS=true
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -69,27 +75,18 @@ COMPLETION_WAITING_DOTS="true"
 plugins=(
     aws
     brew
-    chucknorris
     colored-man-pages
     command-not-found
-    #common-aliases
-    django
     gatsby
     git
-    #git-extras
     gnu-utils
     history
     node
     npm
-    pip
-    pj
+    npx
     python
-    rand-quote
     safe-paste
-    screen
-    swiftpm
     vi-mode
-    web-search
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -144,7 +141,7 @@ export NODE_REPL_HISTORY_SIZE="32768"
 # Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
 export PYTHONIOENCODING="UTF-8"
 
-# Increase Bash history size. Allow 32³ entries; the default is 500.
+# Increase history size. Allow 32³ entries; the default is 500.
 export HISTSIZE="32768"
 export HISTFILESIZE="${HISTSIZE}"
 # Omit duplicates and commands that begin with a space from history.
