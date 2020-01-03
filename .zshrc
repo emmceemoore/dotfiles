@@ -83,7 +83,6 @@ plugins=(
     history
     node
     npm
-    npx
     python
     safe-paste
     vi-mode
@@ -95,6 +94,12 @@ source $ZSH/oh-my-zsh.sh
 
 unsetopt share_history
 bindkey '^R' history-incremental-search-backward
+
+#
+# zsh-completions
+#
+
+fpath=(/usr/local/share/zsh-completions $fpath)
 
 #
 # fzf

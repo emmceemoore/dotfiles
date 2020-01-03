@@ -78,7 +78,8 @@ brew install \
     wget \
     xz \
     youtube-dl \
-    zopfli
+    zopfli \
+    zsh-completions
 success "Done."
 
 # Install some CTF tools.
