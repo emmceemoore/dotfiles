@@ -1,3 +1,7 @@
+[core]
+	editor = vim
+	excludesfile = ~/.gitignore
+
 [include]
 	path = ~/.gitconfig.local
 
@@ -7,6 +11,7 @@
 	br = branch
 	co = checkout
 	df = diff
+	dft = difftool
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 	lgg = log --graph --pretty=format:\"%Cred%h%Creset %C(yellow)%d%Creset - %s\" --all
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit
@@ -35,12 +40,19 @@
 
 [diff]
 	renames = copies
+	tool = vimdiff
 
 [diff "bin"]
 	textconv = hexdump -v -C
 
+[difftool]
+	prompt = false
+
 [help]
 	autocorrect = 1
+
+[pull]
+	rebase = false
 
 [push]
 	default = current

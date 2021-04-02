@@ -77,12 +77,14 @@ plugins=(
     brew
     colored-man-pages
     command-not-found
+    docker
     gatsby
     git
     gnu-utils
     history
     node
     npm
+    poetry
     python
     safe-paste
     vi-mode
@@ -171,6 +173,9 @@ export GIT_PAGER="less -F -X"
 # https://stackoverflow.com/a/42265848/96656
 export GPG_TTY=$(tty)
 
+# Don't eat spaces before `|`s.
+export ZLE_REMOVE_SUFFIX_CHARS=$' \t\n;&'
+
 #
 # Aliases
 #
@@ -210,7 +215,7 @@ alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
 
 # Flush Directory Service cache.
-alias flush-dns="dscacheutil -flushcache && killall -HUP mDNSResponder"
+alias flush-dns="sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder"
 
 # Clean up LaunchServices to remove duplicates in the "Open With" menu.
 alias fix-open-with="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"

@@ -21,9 +21,6 @@ call plug#begin('~/.vim/bundle')
 Plug 'airblade/vim-gitgutter'
 Plug 'davidhalter/jedi-vim'
 Plug 'morhetz/gruvbox'
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'npm install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-sleuth'
 Plug 'vim-airline/vim-airline'
@@ -73,7 +70,11 @@ let g:jedi#completions_command = "<C-Space>"
 let g:jedi#rename_command = "<leader>r"
 
 " POLYGLOT
+" vim-markdown
+let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General Settings                                                             "
@@ -94,8 +95,8 @@ filetype indent on              " Load filetype indentation settings.
 " Searching                                                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set incsearch         " Enable incremental searching.
-set nohlsearch        " Disable search results highlighting.
+set incsearch      " Enable incremental searching.
+set nohlsearch     " Disable search results highlighting.
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Appearance                                                                   "
@@ -120,6 +121,7 @@ set modeline       " Enable modelines to set vim modes.
 set modelines=3    " Check the last three lines for modelines.
 set splitbelow     " Open split windows on the bottom.
 set splitright     " Open vertical split windows on the right.
+set shortmess=aI   " Hide unnecessary text; fit more in command bar.
 
 colorscheme gruvbox
 
@@ -164,6 +166,12 @@ set noexpandtab       " Replace tabs with spaces.
 " Resume editing at the last known position.
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
 
+" HTML
+autocmd FileType html setlocal shiftwidth=2 tabstop=2 expandtab textwidth=0
+
+" JavaScript
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab textwidth=0
+
 " M$ Word Documents
 autocmd BufReadPre *.doc set ro
 autocmd BufReadPost *.doc silent %!antiword -f -t -s "%" - | fmt -csw78
@@ -188,7 +196,7 @@ nnoremap <leader>h gT
 nnoremap <leader>l gt
 
 " Remove unnecessary whitespace from the file and return to the same spot.
-nnoremap <leader>W :%s/\s\+$//<CR>``
+nnoremap <leader>w :%s/\s\+$//<CR>``
 
 " Maintain selection during indent/dedent.
 vnoremap < <gv
@@ -209,3 +217,11 @@ function! CleverTab()
   endif
 endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Miscellaneous                                                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Enable per-project configuration files.
+set exrc
+set secure
